@@ -1,6 +1,5 @@
 import pandas as pd
 import streamlit as st
-import matplotlib.pyplot as plt
 import yfinance as yf
 from streamlit_chat import message
 
