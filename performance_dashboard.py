@@ -1,11 +1,11 @@
 import pandas as pd
 import streamlit as st
 import yfinance as yf
-from streamlit_chat import message
+from streamlit_lightweight_charts import renderLightweightCharts
 
 
 # Constants
-GREETING = "<h1 style='text-align: center; color: lightblue;'>Hello Antonio,</h1>"
+GREETING = "<h2 style='text-align: center; color: lightblue;'>Hello Antonio,</h2>"
 PERFORMANCE = "<h4 style='text-align: center; color: lightblue;'>Your performance last week was down <span style='color: red;'>-2.2 percent</span>. I've optimized your portfolio to return a <span style='color: green;'>+5.7 percent</span> return next week. Select optimize to review and confirm these change.</h4>"
 NAVBAR_STYLE = """
 <style>
@@ -14,6 +14,8 @@ NAVBAR_STYLE = """
 }
 </style>
 """
+
+
 
 
 IMAGE_PATH = "./5k_Labs.jpg"
@@ -48,59 +50,36 @@ st.sidebar.image(IMAGE_PATH, width=200)
 
 import matplotlib.ticker as mtick
 
-# Your data
+import streamlit as st
+import pandas as pd
+import plotly.graph_objects as go
+
 data = {
-    'Trades': list(range(1, 11)),
+    'Trades': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     'Profit': [-580.0, -380.0, -580.0, -540.0, -266.0, -364.0, 160.0, 112.0, -528.0, -416.0]
 }
 
-# Create a DataFrame
 df = pd.DataFrame(data)
 
-# Change the sign of the 'Profit' column
-df['Profit'] *= -1
+fig = go.Figure()
 
-# Calculate adjusted profits
-df['Adjusted Profit'] = START_BALANCE - df['Profit'].cumsum()
+fig.add_trace(go.Scatter(
+    x=df['Trades'], 
+    y=df['Profit'], 
+    fill='tozeroy',
+    fillcolor='rgba(173,216,230,0.3)',  # This sets the fill color to transparent light blue
+    line_color='lightblue'
+))
 
-# Set the background color to navy blue
-plt.rcParams['axes.facecolor'] = '#020E1C'
+fig.update_layout(
+    title='Performance',
+    xaxis_title='Trades',
+    yaxis_title='Profit'
+)
 
-# Plot the 'Adjusted Profit'
-ax = df.plot(x='Trades', y='Adjusted Profit', kind='line', color='lightblue', title='Performance')
-
-# Change the legend text color to light blue
-legend = ax.legend('$')
-for text in legend.get_texts():
-    text.set_color('lightblue')
-
-# Add a y label titled 'Profit'
-ax.set_ylabel('Profit')
-
-# Change the grid color to transparent gray and only show horizontal lines
-ax.grid(axis='y', color='gray', alpha=0.5)
-
-# Change the color of the dots to '#6AD4F5'
-ax.plot(df['Trades'], df['Adjusted Profit'], 'o', color='#6AD4F5')
-
-# Change the color of the plot's foreground to match the inside of the plot
-plt.rcParams['text.color'] = '#062340'
-plt.rcParams['axes.labelcolor'] = '#062340'
-plt.rcParams['xtick.color'] = '#062340'
-plt.rcParams['ytick.color'] = '#062340'
-
-# Format y-axis as dollar
-fmt = '${x:,.0f}'
-tick = mtick.StrMethodFormatter(fmt)
-ax.yaxis.set_major_formatter(tick) 
-
-# Use Streamlit's pyplot() function to display the plot
-st.pyplot(plt.gcf())
-plt.close()
+st.plotly_chart(fig)
 
 
-
-# Sidebar
 st.sidebar.title('Portfolio')
 
 for stock in STOCKS:
@@ -111,7 +90,8 @@ for stock in STOCKS:
     change_percent = ((close_today - close_yesterday) / close_yesterday) * 100
     change_percent = round(change_percent, 5)  # round to 3 hundred-thousandths
     color = 'green' if change_percent > 0 else 'red'
-    if st.sidebar.markdown(f"<a style='display:block;text-align:center;' href='your_link_here'>{stock}: {'🔼' if change_percent > 0 else '🔽'} <span style='color:{color};'>{change_percent}%</span></a>", unsafe_allow_html=True):
+    
+    if st.sidebar.button(f"{stock}: {'🔼' if change_percent > 0 else '🔽'} {change_percent}%"):
         # Add your action for the button click here
         pass
 
