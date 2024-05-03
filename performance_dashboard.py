@@ -2,8 +2,6 @@ import pandas as pd
 import streamlit as st
 import yfinance as yf
 from PIL import Image
-from streamlit_lightweight_charts import renderLightweightCharts
-
 
 # Constants
 GREETING = "<h1 style='text-align: center; color: lightblue;'>Hello Antonio</h1>"
@@ -15,9 +13,6 @@ NAVBAR_STYLE = """
 }
 </style>
 """
-
-
-
 
 IMAGE_PATH = "./5k_Labs.jpg"
 STOCKS = ['NVDA', 'AAPL', 'TSLA', 'AMD']
@@ -43,9 +38,6 @@ st.button('Optimize')
 st.sidebar.image(IMAGE_PATH, width=200)
 
 import matplotlib.ticker as mtick
-
-import streamlit as st
-import pandas as pd
 import plotly.graph_objects as go
 
 data = {
@@ -73,7 +65,6 @@ fig.update_layout(
 
 st.plotly_chart(fig)
 
-
 st.sidebar.title('Portfolio')
 
 for stock in STOCKS:
@@ -89,19 +80,13 @@ for stock in STOCKS:
         # Add your action for the button click here
         pass
 
-
 # Best Trade of The Week
-import streamlit as st
-from PIL import Image
-
-# Title for the section
 st.title("Antonio's Best Trade this Week")
 
 # Load and display the image
 image_path = 'US30-W5212732362690859.png'  # Replace with the path to your image file
 image = Image.open(image_path)
 st.image(image, caption='Long Position Taken on US30 index', use_column_width=True)
-
 
 # Add a section for case studies to the sidebar
 st.sidebar.markdown("## Case Studies")
