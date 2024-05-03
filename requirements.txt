@@ -1,6 +1,4 @@
 pandas
 streamlit
 yfinance
-plotly.graph_objects
-matplotlib.ticker
-Image
+matplotlib
