@@ -1,0 +1,7 @@
+pandas
+streamlit
+yfinance
+renderLightweightCharts
+plotly.graph_objects
+matplotlib.ticker
+Image
