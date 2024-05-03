@@ -14,7 +14,7 @@ NAVBAR_STYLE = """
 </style>
 """
 
-IMAGE_PATH = "./5k_Labs.jpg"
+IMAGE_PATH = "C:\\Users\\bmsto\\OneDrive\\Desktop\\trading_projects\\Dashboard-App\\5K_Labs.jpg"
 STOCKS = ['NVDA', 'AAPL', 'TSLA', 'AMD']
 START_BALANCE = 100000
 
